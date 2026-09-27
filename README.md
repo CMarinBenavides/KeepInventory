@@ -38,9 +38,106 @@ Proporcionar una solución eficiente para la gestión de inventarios, permitiend
 
 El proyecto está dividido en dos componentes principales:
 
-```text
-inventario/
+```
+inventario-app/
 │
-├── backend/     → API REST desarrollada con Spring Boot
+├── backend/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/
+│   │   │   │   └── com/
+│   │   │   │       └── empresa/
+│   │   │   │           └── inventario/
+│   │   │   │               ├── config/
+│   │   │   │               ├── controller/
+│   │   │   │               ├── dto/
+│   │   │   │               ├── entity/
+│   │   │   │               ├── exception/
+│   │   │   │               ├── repository/
+│   │   │   │               ├── service/
+│   │   │   │               │   ├── impl/
+│   │   │   │               │   └── interfaces/
+│   │   │   │               ├── security/
+│   │   │   │               ├── util/
+│   │   │   │               └── InventarioApplication.java
+│   │   │   │
+│   │   │   └── resources/
+│   │   │       ├── application.yml
+│   │   │       ├── application-dev.yml
+│   │   │       ├── application-prod.yml
+│   │   │       ├── static/
+│   │   │       └── templates/
+│   │   │
+│   │   └── test/
+│   │       └── java/
+│   │
+│   ├── pom.xml
+│   └── README.md
 │
-└── frontend/    → Aplicación web desarrollada con Angular
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── core/
+│   │   │   │   ├── guards/
+│   │   │   │   ├── interceptors/
+│   │   │   │   ├── services/
+│   │   │   │   └── models/
+│   │   │   │
+│   │   │   ├── shared/
+│   │   │   │   ├── components/
+│   │   │   │   ├── pipes/
+│   │   │   │   ├── directives/
+│   │   │   │   └── interfaces/
+│   │   │   │
+│   │   │   ├── features/
+│   │   │   │   ├── auth/
+│   │   │   │   ├── usuarios/
+│   │   │   │   ├── productos/
+│   │   │   │   ├── categorias/
+│   │   │   │   ├── proveedores/
+│   │   │   │   └── movimientos/
+│   │   │   │
+│   │   │   ├── layouts/
+│   │   │   ├── app.routes.ts
+│   │   │   └── app.config.ts
+│   │   │
+│   │   ├── assets/
+│   │   │   ├── images/
+│   │   │   ├── icons/
+│   │   │   └── styles/
+│   │   │
+│   │   ├── environments/
+│   │   │   ├── environment.ts
+│   │   │   └── environment.prod.ts
+│   │   │
+│   │   ├── styles.css
+│   │   └── main.ts
+│   │
+│   ├── angular.json
+│   ├── package.json
+│   └── README.md
+│
+├── database/
+│   ├── scripts/
+│   │   ├── schema.sql
+│   │   ├── data.sql
+│   │   └── migrations/
+│   │       ├── V1__create_tables.sql
+│   │       └── V2__add_indexes.sql
+│
+├── docs/
+│   ├── diagramas/
+│   ├── api/
+│   └── manuales/
+│
+├── docker/
+│   ├── backend/
+│   │   └── Dockerfile
+│   ├── frontend/
+│   │   └── Dockerfile
+│   └── nginx/
+│       └── nginx.conf
+│
+├── docker-compose.yml
+├── .gitignore
+└── README.md
