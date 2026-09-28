@@ -38,8 +38,11 @@
   color: var(--primary);
 }
 
-/* margin-left: auto empuja el botón al extremo derecho */
-.logout {
+/* margin-left: auto empuja las acciones al extremo derecho */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-left: auto;
 }
 

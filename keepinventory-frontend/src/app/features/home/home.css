@@ -33,8 +33,8 @@ dd {
   margin-bottom: 1.5rem;
   padding: 1.5rem;
   text-align: center;
-  background: #fff1f5;
-  border: 1px solid #fbcfe8;
+  background: var(--love-soft);
+  border: 1px solid var(--love-border);
   border-radius: 12px;
 }
 
@@ -42,7 +42,7 @@ dd {
   margin: 0 0 1rem;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #be185d;
+  color: var(--love);
 }
 
 /* La imagen se adapta al ancho disponible (celulares) sin deformarse */

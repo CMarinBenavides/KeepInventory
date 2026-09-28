@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
+import { ThemeToggle } from '../../shared/theme-toggle/theme-toggle';
 
 /**
  * Estructura común de las páginas privadas: barra superior + contenido.
@@ -11,7 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
  */
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemeToggle],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
 })

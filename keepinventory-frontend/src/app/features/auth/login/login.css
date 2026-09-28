@@ -3,10 +3,18 @@
 
 /* Centra la tarjeta en la pantalla */
 .login-page {
+  position: relative;
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 1rem;
+}
+
+/* El botón de tema flota en la esquina, sin mover la tarjeta del centro */
+.theme-corner {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 .login-card {
@@ -16,7 +24,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.06);
+  box-shadow: 0 8px 24px var(--shadow);
 }
 
 .login-header {
@@ -70,7 +78,7 @@
   border: none;
   border-radius: 8px;
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
   font: inherit;
   font-weight: 600;
   cursor: pointer;

@@ -5,16 +5,17 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { toErrorMessage } from '../../../core/utils/http-error';
+import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
 
 /**
  * Pantalla de inicio de sesión.
  *
  * Componente standalone: declara en "imports" lo que usa su plantilla
- * (aquí, ReactiveFormsModule para [formGroup] y formControlName).
+ * (aquí, ReactiveFormsModule para [formGroup] y formControlName, y el botón de tema).
  */
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ThemeToggle],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

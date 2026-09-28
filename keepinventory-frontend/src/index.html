@@ -11,6 +11,19 @@
   <!-- Hace que la página se adapte al ancho de celulares y tablets -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Aplica el tema guardado ANTES de que se dibuje la página. Angular tarda unos
+       milisegundos en arrancar; sin esto, en modo oscuro se vería un destello blanco.
+       Usa la misma lógica y la misma clave que ThemeService. -->
+  <script>
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem('keepinventory_theme'); } catch (e) {}
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
   <!-- Aquí Angular dibuja el componente raíz (App, selector 'app-root') -->

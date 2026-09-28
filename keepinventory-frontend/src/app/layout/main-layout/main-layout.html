@@ -11,7 +11,11 @@
     }
   </nav>
 
-  <button type="button" class="btn btn-secondary logout" (click)="logout()">Cerrar sesión</button>
+  <!-- Acciones a la derecha: cambiar tema y cerrar sesión -->
+  <div class="actions">
+    <app-theme-toggle />
+    <button type="button" class="btn btn-secondary logout" (click)="logout()">Cerrar sesión</button>
+  </div>
 </header>
 
 <main class="content">

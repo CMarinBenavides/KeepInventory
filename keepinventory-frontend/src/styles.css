@@ -1,6 +1,13 @@
 /* Estilos globales: aplican a toda la aplicación */
 
-/* Paleta de colores como variables CSS; los componentes las usan con var(--nombre) */
+/*
+ * Paleta de colores como variables CSS; los componentes las usan con var(--nombre).
+ *
+ * Modo claro / oscuro: los componentes NUNCA usan colores fijos, solo variables.
+ * Así, para cambiar de tema basta con redefinir las variables: ThemeService pone
+ * el atributo data-theme="dark" en <html> y el bloque [data-theme='dark'] de abajo
+ * reemplaza los valores. Todo el sitio cambia sin tocar ningún componente.
+ */
 :root {
   --bg: #f5f6fa;
   --surface: #ffffff;
@@ -10,12 +17,49 @@
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --primary-soft: #eef2ff;
+  /* Texto sobre fondo --primary (botones principales) */
+  --on-primary: #ffffff;
   --danger: #dc2626;
   --danger-soft: #fef2f2;
   --warning: #b45309;
   --warning-soft: #fffbeb;
+  --success: #047857;
+  --success-soft: #ecfdf5;
+  --shadow: rgb(0 0 0 / 0.06);
+  /* Colores del easter egg 💕 */
+  --love: #be185d;
+  --love-soft: #fff1f5;
+  --love-border: #fbcfe8;
 
+  /* Le dice al navegador qué tema usar en sus controles nativos
+     (checkbox, select, barras de desplazamiento) */
   color-scheme: light;
+}
+
+/* Tema oscuro: mismos nombres, otros valores. Los colores de acento son más claros
+   que en el tema claro para que tengan buen contraste sobre fondo oscuro */
+:root[data-theme='dark'] {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --border: #2e3342;
+  --text: #e6e8ef;
+  --text-muted: #9aa1b2;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-soft: rgb(129 140 248 / 0.15);
+  --on-primary: #0f1117;
+  --danger: #f87171;
+  --danger-soft: rgb(248 113 113 / 0.12);
+  --warning: #fbbf24;
+  --warning-soft: rgb(251 191 36 / 0.12);
+  --success: #34d399;
+  --success-soft: rgb(52 211 153 / 0.12);
+  --shadow: rgb(0 0 0 / 0.4);
+  --love: #f9a8d4;
+  --love-soft: rgb(244 114 182 / 0.1);
+  --love-border: rgb(244 114 182 / 0.3);
+
+  color-scheme: dark;
 }
 
 *,
@@ -35,6 +79,10 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
+  /* Cambio de tema suave en lugar de un parpadeo brusco */
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 /* Los formularios no heredan la fuente por defecto; se la forzamos */
@@ -140,7 +188,7 @@ h1 {
 /* Acción principal (guardar, crear) */
 .btn-primary {
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -204,6 +252,6 @@ h1 {
 
 /* Usuario activo */
 .badge.active {
-  background: #ecfdf5;
-  color: #047857;
+  background: var(--success-soft);
+  color: var(--success);
 }
