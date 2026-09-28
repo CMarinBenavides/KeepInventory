@@ -86,3 +86,58 @@ dd {
   background: var(--warning-soft);
   color: var(--warning);
 }
+
+/* ===== Easter egg 💕 (solo visible para "gaby") ===== */
+
+/* Tarjeta rosada con el mensaje y la imagen */
+.amor {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: #fff1f5;
+  border: 1px solid #fbcfe8;
+  border-radius: 12px;
+}
+
+.amor-texto {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #be185d;
+}
+
+/* La imagen se adapta al ancho disponible (celulares) sin deformarse */
+.amor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* El corazón "late": crece y vuelve a su tamaño en bucle */
+.latido {
+  display: inline-block;
+  animation: latido 1.2s ease-in-out infinite;
+}
+
+@keyframes latido {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.25);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.15);
+  }
+}
+
+/* Respeta a quien pidió reducir animaciones en su sistema operativo */
+@media (prefers-reduced-motion: reduce) {
+  .latido {
+    animation: none;
+  }
+}

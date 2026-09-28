@@ -9,6 +9,17 @@
     <h1>Hola, {{ user.nombre }} 👋</h1>
     <p class="subtitle">Iniciaste sesión correctamente.</p>
 
+    <!-- Easter egg 💕: solo aparece cuando inicia sesión "gaby" (esGaby en home.ts) -->
+    @if (esGaby()) {
+      <section class="amor" aria-label="Mensaje especial">
+        <p class="amor-texto">
+          Te amo amorcito <span class="latido" aria-hidden="true">❤️</span>
+        </p>
+        <!-- La imagen vive en public/easter-egg/; se puede cambiar por una foto -->
+        <img src="easter-egg/amor.svg" alt="Dos corazones juntos" width="320" height="220" />
+      </section>
+    }
+
     <dl class="user-card">
       <div>
         <dt>Usuario</dt>

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 
 import { AuthService } from '../../core/services/auth.service';
 
@@ -15,6 +15,12 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class Home implements OnInit {
   protected readonly authService = inject(AuthService);
+
+  /**
+   * Easter egg 💕: si quien inicia sesión es "gaby", se muestra un mensaje especial.
+   * Es un computed: se recalcula solo cuando cambia el usuario actual.
+   */
+  protected readonly esGaby = computed(() => this.authService.currentUser()?.username === 'gaby');
 
   /**
    * ngOnInit se ejecuta una vez, cuando el componente se crea.
