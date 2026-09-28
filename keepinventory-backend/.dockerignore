@@ -1,0 +1,6 @@
+# Archivos que Docker NO copia al construir la imagen
+target/
+.env
+.idea/
+.vscode/
+*.iml

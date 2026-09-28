@@ -1,0 +1,32 @@
+<header class="topbar">
+  <span class="brand">📦 KeepInventory</span>
+  <button type="button" class="logout" (click)="logout()">Cerrar sesión</button>
+</header>
+
+<main class="content">
+  <!-- Mientras llega la respuesta de /api/users/me, currentUser() es null -->
+  @if (authService.currentUser(); as user) {
+    <h1>Hola, {{ user.nombre }} 👋</h1>
+    <p class="subtitle">Iniciaste sesión correctamente.</p>
+
+    <dl class="user-card">
+      <div>
+        <dt>Usuario</dt>
+        <dd>{{ user.username }}</dd>
+      </div>
+      <div>
+        <dt>Rol</dt>
+        <!-- isAdmin es un computed del servicio: cambia la etiqueta según el rol -->
+        <dd>
+          <span class="badge" [class.admin]="authService.isAdmin()">{{ user.role }}</span>
+        </dd>
+      </div>
+      <div>
+        <dt>ID</dt>
+        <dd>{{ user.id }}</dd>
+      </div>
+    </dl>
+  } @else {
+    <p class="subtitle">Cargando…</p>
+  }
+</main>
