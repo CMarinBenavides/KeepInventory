@@ -1,0 +1,19 @@
+/**
+ * Configuración de Cloudflare Workers (hosting del frontend en producción).
+ *
+ * Cloudflare ejecuta "npm run build" y luego "npx wrangler deploy", que lee este archivo.
+ * Solo se publican archivos estáticos: no hay código de servidor (Worker) propio.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Nombre del Worker: define la URL https://keepinventory.<cuenta>.workers.dev
+  "name": "keepinventory",
+  "compatibility_date": "2026-09-26",
+  "assets": {
+    // Carpeta que genera "ng build"; index.html debe quedar en la raíz del sitio
+    "directory": "./dist/keepinventory-frontend/browser",
+    // SPA: cualquier ruta que no sea un archivo (ej. /login) devuelve index.html,
+    // y el router de Angular decide qué página mostrar. Evita 404 al recargar.
+    "not_found_handling": "single-page-application"
+  }
+}
