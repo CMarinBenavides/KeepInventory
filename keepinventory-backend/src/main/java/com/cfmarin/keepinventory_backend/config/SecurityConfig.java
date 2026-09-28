@@ -2,10 +2,12 @@ package com.cfmarin.keepinventory_backend.config;
 
 import com.cfmarin.keepinventory_backend.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +39,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // Activa CORS usando el bean corsConfigurationSource() de abajo.
+                // Debe ir en Spring Security (no solo en Spring MVC) para que las peticiones
+                // "preflight" OPTIONS del navegador no sean bloqueadas por falta de token.
+                .cors(Customizer.withDefaults())
                 // CSRF protege aplicaciones con sesión por cookies. Con JWT en el header
                 // no aplica, y si estuviera activo bloquearía los POST.
                 .csrf(csrf -> csrf.disable())
@@ -54,6 +65,33 @@ public class SecurityConfig {
                 // para que cuando lleguen las reglas de autorización el usuario ya esté identificado
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    /**
+     * CORS: le dice al navegador qué frontends pueden llamar a esta API.
+     *
+     * El navegador bloquea las peticiones entre "orígenes" distintos
+     * (protocolo + dominio + puerto). Angular (localhost:4200) y la API (localhost:8080)
+     * son orígenes distintos, así que el backend debe autorizar al frontend explícitamente.
+     *
+     * Los orígenes permitidos vienen de app.cors.allowed-origins (application.properties),
+     * separados por coma, para poder cambiarlos por entorno sin tocar código.
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(
+            @Value("${app.cors.allowed-origins}") List<String> allowedOrigins) {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(allowedOrigins);
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        // Authorization para el token JWT, Content-Type para enviar JSON
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        // Cuánto tiempo (segundos) puede el navegador recordar esta respuesta y evitar repetir el preflight
+        config.setMaxAge(3600L);
+
+        // Aplica esta configuración a todas las rutas de la API
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", config);
+        return source;
     }
 
     /**

@@ -1,0 +1,19 @@
+<!doctype html>
+<!-- Única página HTML de la app (SPA: Single Page Application).
+     Angular no recarga la página al navegar: cambia el contenido dentro de <app-root>. -->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <!-- Título por defecto; el router lo reemplaza con el "title" de cada ruta (app.routes.ts) -->
+  <title>KeepInventory</title>
+  <!-- Ruta base que usa el router para construir las URLs (/login, /, ...) -->
+  <base href="/">
+  <!-- Hace que la página se adapte al ancho de celulares y tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <!-- Aquí Angular dibuja el componente raíz (App, selector 'app-root') -->
+  <app-root></app-root>
+</body>
+</html>
