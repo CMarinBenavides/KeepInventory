@@ -10,7 +10,14 @@
   <base href="/">
   <!-- Hace que la página se adapte al ancho de celulares y tablets -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Ícono de la pestaña. Los navegadores modernos usan el SVG (nítido en cualquier
+       tamaño); el .ico queda de respaldo para los antiguos. apple-touch-icon es el
+       ícono que se ve al agregar la página a la pantalla de inicio de un iPhone -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Color de la barra del navegador en celulares (Android) -->
+  <meta name="theme-color" content="#4f46e5">
   <!-- Aplica el tema guardado ANTES de que se dibuje la página. Angular tarda unos
        milisegundos en arrancar; sin esto, en modo oscuro se vería un destello blanco.
        Usa la misma lógica y la misma clave que ThemeService. -->

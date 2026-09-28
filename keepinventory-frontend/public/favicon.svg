@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Ícono de KeepInventory: una caja (inventario) sobre el color principal de la app -->
+  <rect width="64" height="64" rx="14" fill="#4f46e5"/>
+  <!-- Caja en perspectiva: tapa, lado izquierdo y lado derecho -->
+  <path d="M32 12 L52 22 L32 32 L12 22 Z" fill="#ffffff"/>
+  <path d="M12 22 L32 32 L32 54 L12 44 Z" fill="#c7d2fe"/>
+  <path d="M52 22 L32 32 L32 54 L52 44 Z" fill="#a5b4fc"/>
+  <!-- Cinta de la caja -->
+  <path d="M22 17 L42 27 L42 35 L38 33 L38 29 L18 19 Z" fill="#fbbf24"/>
+</svg>
