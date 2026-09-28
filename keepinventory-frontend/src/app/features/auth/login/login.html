@@ -70,6 +70,15 @@
       <button type="submit" class="submit" [disabled]="loading()">
         {{ loading() ? 'Ingresando…' : 'Iniciar sesión' }}
       </button>
+
+      <!-- Aviso si el servidor tarda (ej. backend despertando en Render).
+           role="status" hace que los lectores de pantalla lo anuncien sin interrumpir -->
+      @if (slowServer()) {
+        <p class="slow-notice" role="status">
+          <span class="spinner" aria-hidden="true"></span>
+          El servidor está despertando, puede tardar hasta 2 minutos. No cierres la página.
+        </p>
+      }
     </form>
   </section>
 </main>

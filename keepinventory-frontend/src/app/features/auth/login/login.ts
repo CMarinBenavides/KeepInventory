@@ -1,11 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { toErrorMessage } from '../../../core/utils/http-error';
 import { ThemeToggle } from '../../../shared/theme-toggle/theme-toggle';
+
+/**
+ * Milisegundos de espera antes de avisar que el servidor está tardando.
+ * En el plan gratuito de Render el backend se suspende sin uso y tarda
+ * hasta ~2 minutos en volver a arrancar; mientras tanto el login queda esperando.
+ */
+const SLOW_SERVER_MS = 5000;
 
 /**
  * Pantalla de inicio de sesión.
@@ -44,6 +51,16 @@ export class Login {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly showPassword = signal(false);
 
+  /** true cuando el login lleva más de SLOW_SERVER_MS esperando respuesta */
+  protected readonly slowServer = signal(false);
+  private slowServerTimer?: ReturnType<typeof setTimeout>;
+
+  constructor() {
+    // DestroyRef avisa cuando el componente se destruye (ej. al navegar al inicio
+    // tras un login correcto): se cancela el temporizador para que no quede pendiente
+    inject(DestroyRef).onDestroy(() => clearTimeout(this.slowServerTimer));
+  }
+
   protected togglePassword(): void {
     this.showPassword.update((visible) => !visible);
   }
@@ -66,6 +83,8 @@ export class Login {
 
     this.loading.set(true);
     this.errorMessage.set(null);
+    // Si la respuesta tarda, se muestra el aviso de "servidor despertando"
+    this.slowServerTimer = setTimeout(() => this.slowServer.set(true), SLOW_SERVER_MS);
 
     // subscribe() es lo que realmente dispara la petición HTTP
     this.authService.login(this.form.getRawValue()).subscribe({
@@ -73,8 +92,14 @@ export class Login {
       next: () => this.router.navigate(['/']),
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
+        this.stopSlowServerNotice();
         this.errorMessage.set(toErrorMessage(error));
       },
     });
+  }
+
+  private stopSlowServerNotice(): void {
+    clearTimeout(this.slowServerTimer);
+    this.slowServer.set(false);
   }
 }
