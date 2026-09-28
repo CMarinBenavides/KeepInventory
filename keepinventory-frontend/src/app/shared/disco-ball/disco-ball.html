@@ -1,0 +1,49 @@
+<!-- aria-hidden: es pura decoración, los lectores de pantalla la ignoran -->
+<div class="disco" aria-hidden="true">
+  <!-- Luces de colores que recorren la pantalla -->
+  @for (spot of [1, 2, 3, 4, 5, 6]; track spot) {
+    <span class="spot"></span>
+  }
+
+  <!-- Bola colgando de un hilo -->
+  <div class="ball-wrapper">
+    <span class="string"></span>
+    <svg class="ball" viewBox="0 0 120 120" width="120" height="120">
+      <defs>
+        <!-- Recorte circular: los espejos solo se ven dentro de la bola -->
+        <clipPath id="disco-clip">
+          <circle cx="60" cy="60" r="50" />
+        </clipPath>
+        <!-- Cuadrícula de espejitos plateados -->
+        <pattern id="disco-mirrors" width="12" height="12" patternUnits="userSpaceOnUse">
+          <rect width="12" height="12" fill="#6b7280" />
+          <rect x="1" y="1" width="10" height="10" fill="#d1d5db" />
+        </pattern>
+        <!-- Algunos espejos reflejan colores -->
+        <pattern id="disco-glints" width="48" height="36" patternUnits="userSpaceOnUse">
+          <rect x="1" y="1" width="10" height="10" fill="#f0abfc" />
+          <rect x="25" y="13" width="10" height="10" fill="#67e8f9" />
+          <rect x="13" y="25" width="10" height="10" fill="#fde047" />
+          <rect x="37" y="25" width="10" height="10" fill="#ffffff" />
+        </pattern>
+        <!-- Luz y sombra para que parezca una esfera y no un círculo plano -->
+        <radialGradient id="disco-shade" cx="35%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#ffffff" stop-opacity="0.85" />
+          <stop offset="0.45" stop-color="#ffffff" stop-opacity="0" />
+          <stop offset="1" stop-color="#000000" stop-opacity="0.6" />
+        </radialGradient>
+      </defs>
+
+      <g clip-path="url(#disco-clip)">
+        <!-- Los espejos se desplazan de lado en bucle: así parece que la bola gira -->
+        <g class="mirrors">
+          <rect x="-48" y="0" width="216" height="120" fill="url(#disco-mirrors)" />
+          <rect x="-48" y="0" width="216" height="120" fill="url(#disco-glints)" />
+        </g>
+        <circle cx="60" cy="60" r="50" fill="url(#disco-shade)" />
+      </g>
+    </svg>
+  </div>
+
+  <p class="party">🪩 ¡Modo disco!</p>
+</div>

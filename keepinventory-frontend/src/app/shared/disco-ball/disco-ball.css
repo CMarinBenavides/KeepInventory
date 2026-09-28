@@ -1,0 +1,131 @@
+/* Capa sobre toda la página; pointer-events: none deja hacer clic a través de ella */
+.disco {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ----- Bola ----- */
+
+/* La bola baja desde arriba al empezar */
+.ball-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  animation: bajar 0.8s ease-out both;
+}
+
+.string {
+  width: 2px;
+  height: 60px;
+  background: #9ca3af;
+}
+
+.ball {
+  filter: drop-shadow(0 0 18px rgb(255 255 255 / 0.7));
+}
+
+/* Desplazar los espejos exactamente 48px (el ancho del patrón) hace un bucle sin saltos */
+.mirrors {
+  animation: girar 1.2s linear infinite;
+}
+
+.party {
+  margin: 0.5rem 0 0;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ----- Luces ----- */
+
+.spot {
+  position: absolute;
+  width: 34vmin;
+  height: 34vmin;
+  border-radius: 50%;
+  opacity: 0.45;
+  filter: blur(30px);
+  animation: flotar 3s ease-in-out infinite alternate;
+}
+
+/* Cada luz con su color, posición y recorrido propios */
+.spot:nth-child(1) {
+  background: #ff00c8;
+  top: 10%;
+  left: 5%;
+}
+.spot:nth-child(2) {
+  background: #00e5ff;
+  top: 55%;
+  left: 70%;
+  animation-delay: -0.5s;
+  animation-direction: alternate-reverse;
+}
+.spot:nth-child(3) {
+  background: #ffe600;
+  top: 60%;
+  left: 15%;
+  animation-delay: -1s;
+}
+.spot:nth-child(4) {
+  background: #7c3aed;
+  top: 15%;
+  left: 65%;
+  animation-delay: -1.5s;
+  animation-direction: alternate-reverse;
+}
+.spot:nth-child(5) {
+  background: #00ff85;
+  top: 35%;
+  left: 40%;
+  animation-delay: -2s;
+}
+.spot:nth-child(6) {
+  background: #ff5a00;
+  top: 75%;
+  left: 45%;
+  animation-delay: -2.5s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes bajar {
+  from {
+    transform: translate(-50%, -100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: translateX(48px);
+  }
+}
+
+@keyframes flotar {
+  from {
+    transform: translate(-15vw, -10vh);
+  }
+  to {
+    transform: translate(15vw, 12vh);
+  }
+}
+
+/* Sin animaciones para quien lo pidió en su sistema: bola y luces quietas */
+@media (prefers-reduced-motion: reduce) {
+  .ball-wrapper,
+  .mirrors,
+  .spot {
+    animation: none;
+  }
+}

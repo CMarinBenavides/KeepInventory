@@ -255,3 +255,54 @@ h1 {
   background: var(--success-soft);
   color: var(--success);
 }
+
+/* ===== Easter egg 🪩: modo disco =====
+   ThemeService pone <html data-disco> durante 5 segundos. La bola y las luces
+   están en el componente DiscoBall; aquí solo cambian los colores de la página.
+   Los cambios son suaves (sin destellos rápidos) para no molestar a personas
+   sensibles a la luz intermitente. */
+
+/* El fondo recorre colores de neón */
+:root[data-disco] body {
+  animation: disco-fondo 3s linear infinite;
+}
+
+/* Todo el contenido de la página (menos la bola) gira por el círculo cromático:
+   hue-rotate cambia cada color por otro sin alterar su brillo */
+:root[data-disco] app-root > :not(app-disco-ball) {
+  animation: disco-colores 2.5s linear infinite;
+}
+
+@keyframes disco-fondo {
+  0%,
+  100% {
+    background-color: #2a0845;
+  }
+  25% {
+    background-color: #6a0572;
+  }
+  50% {
+    background-color: #0b3d91;
+  }
+  75% {
+    background-color: #006d5b;
+  }
+}
+
+@keyframes disco-colores {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-disco] body,
+  :root[data-disco] app-root > :not(app-disco-ball) {
+    animation: none;
+  }
+
+  /* Sin movimiento, solo un fondo morado fijo mientras dura */
+  :root[data-disco] body {
+    background-color: #2a0845;
+  }
+}
