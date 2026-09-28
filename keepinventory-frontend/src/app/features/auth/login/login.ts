@@ -3,8 +3,8 @@ import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ApiError } from '../../../core/models/auth.models';
 import { AuthService } from '../../../core/services/auth.service';
+import { toErrorMessage } from '../../../core/utils/http-error';
 
 /**
  * Pantalla de inicio de sesión.
@@ -72,20 +72,8 @@ export class Login {
       next: () => this.router.navigate(['/']),
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        this.errorMessage.set(this.toErrorMessage(error));
+        this.errorMessage.set(toErrorMessage(error));
       },
     });
-  }
-
-  /** Traduce el error HTTP en un mensaje entendible para el usuario */
-  private toErrorMessage(error: HttpErrorResponse): string {
-    // status 0: la petición ni siquiera llegó (backend apagado, sin red o CORS)
-    if (error.status === 0) {
-      return 'No se pudo conectar con el servidor. Verifica que el backend esté en ejecución.';
-    }
-
-    // El backend responde con ProblemDetail; "detail" trae el mensaje (ej. 401, 400)
-    const apiError = error.error as ApiError | null;
-    return apiError?.detail ?? 'Ocurrió un error inesperado. Intenta de nuevo.';
   }
 }

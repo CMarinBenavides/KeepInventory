@@ -1,0 +1,20 @@
+<header class="topbar">
+  <a routerLink="/" class="brand">📦 KeepInventory</a>
+
+  <!-- routerLinkActive agrega la clase "active" al enlace de la página actual.
+       exact: true evita que "Inicio" (/) quede activo también en /usuarios -->
+  <nav class="nav" aria-label="Navegación principal">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+    <!-- Solo los administradores ven el enlace (el backend igual protege la API) -->
+    @if (authService.isAdmin()) {
+      <a routerLink="/usuarios" routerLinkActive="active">Usuarios</a>
+    }
+  </nav>
+
+  <button type="button" class="btn btn-secondary logout" (click)="logout()">Cerrar sesión</button>
+</header>
+
+<main class="content">
+  <!-- Aquí se dibuja la página hija según la URL -->
+  <router-outlet />
+</main>

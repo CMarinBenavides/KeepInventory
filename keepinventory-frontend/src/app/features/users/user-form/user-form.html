@@ -1,0 +1,99 @@
+<a routerLink="/usuarios" class="back">← Volver a usuarios</a>
+
+<h1>{{ isEdit() ? 'Editar usuario' : 'Nuevo usuario' }}</h1>
+<p class="subtitle">
+  {{ isEdit() ? 'Modifica los datos del usuario.' : 'Crea una cuenta y elige su rol.' }}
+</p>
+
+@if (loading()) {
+  <p class="subtitle">Cargando usuario…</p>
+} @else {
+  <form class="form-card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    @if (errorMessage(); as message) {
+      <div class="alert" role="alert">{{ message }}</div>
+    }
+
+    @if (isSelf()) {
+      <p class="note">
+        Estás editando tu propia cuenta: no puedes cambiar tu username, rol ni estado.
+      </p>
+    }
+
+    <div class="field">
+      <label for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        autocomplete="name"
+        [class.invalid]="fieldError('nombre')"
+        [attr.aria-invalid]="!!fieldError('nombre')"
+        aria-describedby="nombre-error"
+      />
+      @if (fieldError('nombre'); as error) {
+        <small id="nombre-error" class="field-error">{{ error }}</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="username">Usuario</label>
+      <input
+        id="username"
+        type="text"
+        formControlName="username"
+        autocomplete="off"
+        [class.invalid]="fieldError('username')"
+        [attr.aria-invalid]="!!fieldError('username')"
+        aria-describedby="username-error"
+      />
+      @if (fieldError('username'); as error) {
+        <small id="username-error" class="field-error">{{ error }}</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="password">Contraseña</label>
+      <!-- autocomplete="new-password" evita que el navegador rellene la del admin -->
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        autocomplete="new-password"
+        [class.invalid]="fieldError('password')"
+        [attr.aria-invalid]="!!fieldError('password')"
+        aria-describedby="password-error password-hint"
+      />
+      @if (fieldError('password'); as error) {
+        <small id="password-error" class="field-error">{{ error }}</small>
+      }
+      <small id="password-hint" class="field-hint">
+        {{ isEdit() ? 'Déjala vacía para conservar la contraseña actual.' : 'Entre 8 y 72 caracteres.' }}
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="role">Rol</label>
+      <select id="role" formControlName="role">
+        @for (option of roleOptions; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- El estado solo tiene sentido al editar: al crear, la cuenta queda activa -->
+    @if (isEdit()) {
+      <label class="checkbox">
+        <input type="checkbox" formControlName="active" />
+        Cuenta activa
+        <small class="field-hint">(si se desactiva, el usuario no podrá iniciar sesión)</small>
+      </label>
+    }
+
+    <div class="form-actions">
+      <a routerLink="/usuarios" class="btn btn-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-primary" [disabled]="saving()">
+        {{ saving() ? 'Guardando…' : isEdit() ? 'Guardar cambios' : 'Crear usuario' }}
+      </button>
+    </div>
+  </form>
+}

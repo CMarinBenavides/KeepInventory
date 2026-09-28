@@ -42,3 +42,168 @@ button,
 input {
   font: inherit;
 }
+
+/* ===== Elementos compartidos entre páginas ===== */
+
+h1 {
+  margin: 0 0 0.25rem;
+}
+
+/* Texto secundario debajo de un título */
+.subtitle {
+  color: var(--text-muted);
+  margin: 0 0 1.5rem;
+}
+
+/* ----- Formularios ----- */
+
+/* Cada campo: etiqueta, input y mensaje de error en columna */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Borde resaltado cuando el campo está seleccionado (accesibilidad con teclado) */
+.field input:focus,
+.field select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+/* Clase que agregan las plantillas con [class.invalid] cuando el campo tiene error */
+.field input.invalid,
+.field select.invalid {
+  border-color: var(--danger);
+}
+
+/* Mensaje de error debajo del campo */
+.field-error {
+  color: var(--danger);
+  font-size: 0.8rem;
+}
+
+/* Texto de ayuda debajo del campo */
+.field-hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Mensaje de error general (credenciales incorrectas, servidor caído...) */
+.alert {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* ----- Botones ----- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Acción principal (guardar, crear) */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+/* Acción secundaria (cancelar, editar) */
+.btn-secondary {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Acción destructiva (eliminar) */
+.btn-danger {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+}
+
+/* Botón más compacto, para tablas */
+.btn-sm {
+  padding: 0.3rem 0.65rem;
+  font-size: 0.85rem;
+}
+
+/* ----- Etiquetas ----- */
+
+/* Etiqueta redondeada (rol, estado) */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+/* Rol ADMIN */
+.badge.admin {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+/* Usuario inactivo */
+.badge.inactive {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* Usuario activo */
+.badge.active {
+  background: #ecfdf5;
+  color: #047857;
+}

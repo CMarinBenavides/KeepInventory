@@ -1,0 +1,56 @@
+/* Barra superior: marca y navegación a la izquierda, cerrar sesión a la derecha */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav a {
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+/* Página actual (clase que pone routerLinkActive) */
+.nav a.active {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+/* margin-left: auto empuja el botón al extremo derecho */
+.logout {
+  margin-left: auto;
+}
+
+.logout:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Contenido principal centrado con un ancho máximo para que sea legible */
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}

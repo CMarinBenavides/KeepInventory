@@ -1,0 +1,72 @@
+<div class="page-header">
+  <div>
+    <h1>Usuarios</h1>
+    <p class="subtitle">Administra quién puede ingresar a KeepInventory.</p>
+  </div>
+  <a routerLink="nuevo" class="btn btn-primary">+ Nuevo usuario</a>
+</div>
+
+@if (errorMessage(); as message) {
+  <div class="alert" role="alert">{{ message }}</div>
+}
+
+@if (loading()) {
+  <p class="subtitle">Cargando usuarios…</p>
+} @else {
+  <!-- El contenedor permite desplazar la tabla horizontalmente en pantallas pequeñas -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Estado</th>
+          <th scope="col"><span class="visually-hidden">Acciones</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- @for recorre la lista; "track" le dice a Angular cómo identificar cada fila
+             para no redibujar toda la tabla cuando cambia un solo elemento -->
+        @for (user of users(); track user.id) {
+          <tr>
+            <td>
+              {{ user.nombre }}
+              @if (isCurrentUser(user)) {
+                <span class="you">(tú)</span>
+              }
+            </td>
+            <td>{{ user.username }}</td>
+            <td>
+              <span class="badge" [class.admin]="user.role === 'ADMIN'">
+                {{ user.role === 'ADMIN' ? 'Administrador' : 'Usuario' }}
+              </span>
+            </td>
+            <td>
+              <span class="badge" [class.active]="user.active" [class.inactive]="!user.active">
+                {{ user.active ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="actions">
+              <!-- Ruta relativa: desde /usuarios lleva a /usuarios/5/editar -->
+              <a [routerLink]="[user.id, 'editar']" class="btn btn-secondary btn-sm">Editar</a>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="delete(user)"
+                [disabled]="isCurrentUser(user) || deletingId() === user.id"
+                [attr.title]="isCurrentUser(user) ? 'No puedes eliminar tu propio usuario' : null"
+              >
+                {{ deletingId() === user.id ? 'Eliminando…' : 'Eliminar' }}
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="empty">No hay usuarios registrados.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

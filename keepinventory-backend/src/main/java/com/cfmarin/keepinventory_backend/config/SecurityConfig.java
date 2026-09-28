@@ -55,6 +55,12 @@ public class SecurityConfig {
                         // Spring redirige internamente a /error cuando algo falla;
                         // si no es público, los errores (400, 409...) llegarían como 401
                         .requestMatchers("/error").permitAll()
+                        // Datos del propio usuario: cualquier usuario autenticado.
+                        // Va ANTES de la regla de /api/users/** porque gana la primera que coincide
+                        .requestMatchers("/api/users/me").authenticated()
+                        // CRUD de usuarios: solo administradores. hasRole("ADMIN") busca la
+                        // autoridad "ROLE_ADMIN" (ver User.getAuthorities()). Sin el rol -> 403
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
                         // Cualquier otra ruta requiere un token válido
                         .anyRequest().authenticated()
                 )

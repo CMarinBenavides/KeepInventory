@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { catchError, map, of } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 
@@ -26,4 +27,28 @@ export const guestGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   return authService.isLoggedIn() ? router.createUrlTree(['/']) : true;
+};
+
+/**
+ * Rutas de administrador: solo con rol ADMIN; con otro rol redirige al inicio.
+ *
+ * Si se recargó la página, el usuario aún no está en memoria: se pide al backend
+ * (GET /api/users/me) y se decide cuando llega la respuesta. Un guard puede
+ * devolver un Observable: el router espera su valor antes de navegar.
+ */
+export const adminGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  const home = router.createUrlTree(['/']);
+
+  const user = authService.currentUser();
+  if (user) {
+    return user.role === 'ADMIN' ? true : home;
+  }
+
+  return authService.loadCurrentUser().pipe(
+    map((loaded) => (loaded.role === 'ADMIN' ? true : home)),
+    // Token inválido: el interceptor ya cerró la sesión; por si acaso, al login
+    catchError(() => of(router.createUrlTree(['/login']))),
+  );
 };

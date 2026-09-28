@@ -1,4 +1,5 @@
-/* Estos estilos solo afectan a este componente (Angular los "encapsula") */
+/* Estos estilos solo afectan a este componente (Angular los "encapsula").
+   Los campos, errores y alertas usan los estilos globales de styles.css */
 
 /* Centra la tarjeta en la pantalla */
 .login-page {
@@ -37,47 +38,6 @@
   color: var(--text-muted);
 }
 
-/* Cada campo del formulario: etiqueta, input y mensaje de error en columna */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-input {
-  width: 100%;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font: inherit;
-  background: var(--surface);
-  color: var(--text);
-}
-
-/* Borde resaltado cuando el input está seleccionado (accesibilidad con teclado) */
-input:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 1px;
-  border-color: var(--primary);
-}
-
-/* Clase que agrega [class.invalid] en login.html cuando el campo tiene error */
-input.invalid {
-  border-color: var(--danger);
-}
-
-/* Mensaje de error debajo del campo */
-.field-error {
-  color: var(--danger);
-  font-size: 0.8rem;
-}
-
 /* El botón "Mostrar" queda dentro del input, a la derecha */
 .password-wrapper {
   position: relative;
@@ -100,17 +60,6 @@ input.invalid {
   font-weight: 600;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
-}
-
-/* Mensaje de error general (credenciales incorrectas, servidor caído...) */
-.alert {
-  background: var(--danger-soft);
-  color: var(--danger);
-  border: 1px solid var(--danger);
-  border-radius: 8px;
-  padding: 0.65rem 0.75rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
 }
 
 /* Botón principal "Iniciar sesión" */

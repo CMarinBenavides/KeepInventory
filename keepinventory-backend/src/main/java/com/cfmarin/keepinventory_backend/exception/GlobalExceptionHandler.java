@@ -35,6 +35,26 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Usuario inexistente -> 404 Not Found.
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public ProblemDetail handleUserNotFound(UserNotFoundException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        problem.setTitle("Usuario no encontrado");
+        return problem;
+    }
+
+    /**
+     * Regla de negocio incumplida (ej. un admin eliminándose a sí mismo) -> 409 Conflict.
+     */
+    @ExceptionHandler(OperationNotAllowedException.class)
+    public ProblemDetail handleOperationNotAllowed(OperationNotAllowedException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
+        problem.setTitle("Operación no permitida");
+        return problem;
+    }
+
+    /**
      * Login fallido -> 401 Unauthorized.
      *
      * AuthenticationException es la clase padre de BadCredentialsException (contraseña
