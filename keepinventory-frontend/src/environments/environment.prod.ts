@@ -8,4 +8,6 @@
  */
 export const environment = {
   apiUrl: 'https://keepinventory.onrender.com/api',
+  // Minutos sin actividad (mouse, teclado, scroll, toque) antes de cerrar la sesión
+  sessionIdleMinutes: 15,
 };

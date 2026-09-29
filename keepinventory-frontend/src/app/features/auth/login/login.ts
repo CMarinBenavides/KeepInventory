@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, input, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -50,6 +50,24 @@ export class Login {
   protected readonly loading = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly showPassword = signal(false);
+
+  /**
+   * Parámetro ?sesion= de la URL, puesto por AuthService.logout() cuando la sesión
+   * terminó sola. Llega como input gracias a withComponentInputBinding (app.config.ts).
+   */
+  readonly sesion = input<string>();
+
+  /** Aviso de por qué se cerró la sesión, o null si el usuario entró normalmente */
+  protected readonly sessionMessage = computed(() => {
+    switch (this.sesion()) {
+      case 'inactividad':
+        return 'Tu sesión se cerró por inactividad. Inicia sesión de nuevo para continuar.';
+      case 'expirada':
+        return 'Tu sesión expiró. Inicia sesión de nuevo para continuar.';
+      default:
+        return null;
+    }
+  });
 
   /** true cuando el login lleva más de SLOW_SERVER_MS esperando respuesta */
   protected readonly slowServer = signal(false);

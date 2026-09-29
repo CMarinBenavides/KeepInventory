@@ -13,11 +13,17 @@
          (ngSubmit) se dispara con el botón o al presionar Enter.
          novalidate desactiva los mensajes nativos del navegador: usamos los nuestros. -->
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-
       <!-- @if es el control de flujo de Angular: el bloque solo existe si la condición es true.
            role="alert" hace que los lectores de pantalla anuncien el mensaje. -->
       @if (errorMessage(); as message) {
         <div class="alert" role="alert">{{ message }}</div>
+      } @else if (sessionMessage(); as message) {
+        <!-- Aviso de sesión cerrada (por inactividad o token vencido). Si aparece un
+             error de login, se muestra el error en su lugar para no apilar mensajes -->
+        <div class="session-notice" role="status">
+          <span aria-hidden="true">🔒</span>
+          {{ message }}
+        </div>
       }
 
       <div class="field">
@@ -76,7 +82,8 @@
       @if (slowServer()) {
         <p class="slow-notice" role="status">
           <span class="spinner" aria-hidden="true"></span>
-          El servidor fue secuestrado, podemos tardar varios minutos en recuperarlo. No cierres la página.
+          El servidor fue secuestrado, podemos tardar varios minutos en recuperarlo. No cierres la
+          página.
         </p>
       }
     </form>

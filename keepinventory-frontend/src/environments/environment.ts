@@ -6,4 +6,6 @@
  */
 export const environment = {
   apiUrl: 'http://localhost:8080/api',
+  // Minutos sin actividad (mouse, teclado, scroll, toque) antes de cerrar la sesión
+  sessionIdleMinutes: 10,
 };

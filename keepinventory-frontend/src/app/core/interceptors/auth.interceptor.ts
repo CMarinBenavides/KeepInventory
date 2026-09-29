@@ -33,7 +33,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       const isAuthEndpoint = req.url.startsWith(`${environment.apiUrl}/auth/`);
 
       if (error.status === 401 && isApiRequest && !isAuthEndpoint) {
-        authService.logout();
+        authService.logout('expirada');
       }
 
       // Se relanza el error para que quien hizo la petición también pueda manejarlo

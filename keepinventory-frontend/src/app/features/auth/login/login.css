@@ -94,6 +94,19 @@
   cursor: wait;
 }
 
+/* Aviso de sesión cerrada por inactividad o vencimiento */
+.session-notice {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: var(--primary-soft);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
 /* Aviso de "servidor despertando" debajo del botón */
 .slow-notice {
   display: flex;

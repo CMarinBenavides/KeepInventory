@@ -10,6 +10,14 @@ import { AuthResponse, LoginRequest, User } from '../models/auth.models';
 const TOKEN_KEY = 'keepinventory_token';
 
 /**
+ * Por qué terminó la sesión sin que el usuario la cerrara. Viaja al login como
+ * parámetro de la URL (/login?sesion=inactividad) para mostrarle un aviso.
+ *  - inactividad: pasó el tiempo máximo sin usar la página (IdleService)
+ *  - expirada:    el backend rechazó el token (vencido o inválido, authInterceptor)
+ */
+export type SessionEndReason = 'inactividad' | 'expirada';
+
+/**
  * Maneja la sesión del usuario: login, logout, token y usuario actual.
  *
  * providedIn: 'root' crea una única instancia para toda la app (singleton),
@@ -73,11 +81,14 @@ export class AuthService {
   /**
    * Cierra la sesión. Con JWT no hay que avisarle al backend: basta con
    * olvidar el token en el navegador.
+   *
+   * @param reason si la sesión terminó sola (inactividad o token vencido), el login
+   *               muestra un aviso explicando por qué. Sin motivo = el usuario la cerró.
    */
-  logout(): void {
+  logout(reason?: SessionEndReason): void {
     localStorage.removeItem(TOKEN_KEY);
     this._currentUser.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], reason ? { queryParams: { sesion: reason } } : {});
   }
 
   getToken(): string | null {

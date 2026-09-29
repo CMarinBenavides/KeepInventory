@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
+import { IdleService } from '../../core/services/idle.service';
 import { ThemeToggle } from '../../shared/theme-toggle/theme-toggle';
 
 /**
@@ -16,8 +17,9 @@ import { ThemeToggle } from '../../shared/theme-toggle/theme-toggle';
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
 })
-export class MainLayout implements OnInit {
+export class MainLayout implements OnInit, OnDestroy {
   protected readonly authService = inject(AuthService);
+  private readonly idleService = inject(IdleService);
 
   /**
    * Si se recargó la página, currentUser está vacío (el token sigue en
@@ -28,6 +30,14 @@ export class MainLayout implements OnInit {
     if (!this.authService.currentUser()) {
       this.authService.loadCurrentUser().subscribe();
     }
+
+    // Este layout solo existe con sesión iniciada: es el lugar para vigilar la inactividad
+    this.idleService.start();
+  }
+
+  /** Al salir de las páginas privadas (cerrar sesión) se deja de vigilar */
+  ngOnDestroy(): void {
+    this.idleService.stop();
   }
 
   protected logout(): void {
